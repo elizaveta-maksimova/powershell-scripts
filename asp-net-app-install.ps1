@@ -26,7 +26,17 @@ Install-WindowsFeature NET-Framework-45-ASPNET
 Invoke-WebRequest  https://github.com/elizaveta-maksimova/powershell-scripts/blob/master/azure-store-app/archived/azure-store-app.zip?raw=true -OutFile c:\temp\azurestore.zip
 
 # Expand zip archive
-Expand-Archive C:\temp\azurestore.zip c:\azurestore
+
+## Powershell 5
+##Expand-Archive C:\temp\azurestore.zip c:\azurestore
+
+## Powershell 4
+$sourceFile = 'C:\temp\azurestore.zip'
+$targetFolder = 'C:\azurestore'
+ 
+[System.Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem')
+[System.IO.Compression.ZipFile]::ExtractToDirectory($sourceFile, $targetFolder)
+
 
 $webConfig = 'C:\app\Web.config'
 $webConfigXml = (Get-Content $webConfig) -as [Xml]
