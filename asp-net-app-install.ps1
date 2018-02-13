@@ -16,17 +16,17 @@ netsh advfirewall firewall add rule name="http" dir=in action=allow protocol=TCP
 
 # Folders
 New-Item -ItemType Directory c:\temp
-New-Item -ItemType Directory c:\app
+New-Item -ItemType Directory c:\azurestore
 
 # Install iis and ASP.NET 4.5
 Install-WindowsFeature web-server -IncludeManagementTools
 Install-WindowsFeature NET-Framework-45-ASPNET
 
 # Download app
-Invoke-WebRequest  https://github.com/Microsoft/dotnet-core-sample-templates/raw/master/dotnet-core-music-windows/music-app/music-store-azure-demo-pub.zip -OutFile c:\temp\musicstore.zip
+Invoke-WebRequest  https://github.com/elizaveta-maksimova/powershell-scripts/blob/master/azure-store-app/archived/azure-store-app.zip -OutFile c:\temp\azurestore.zip
 
 # Expand zip archive
-Expand-Archive C:\temp\myapp.zip c:\app
+Expand-Archive C:\temp\azurestore.zip c:\azurestore
 
 $webConfig = 'C:\app\Web.config'
 $webConfigXml = (Get-Content $webConfig) -as [Xml]
@@ -42,5 +42,5 @@ $webConfigXml.Save($webConfig)
 # Configure iis
 Remove-WebSite -Name "Default Web Site"
 Set-ItemProperty IIS:\AppPools\DefaultAppPool\ managedRuntimeVersion ""
-New-Website -Name "AzureStore" -Port 80 -PhysicalPath C:\app\ -ApplicationPool DefaultAppPool
+New-Website -Name "AzureStore" -Port 80 -PhysicalPath C:\azurestore\ -ApplicationPool DefaultAppPool
 & iisreset
