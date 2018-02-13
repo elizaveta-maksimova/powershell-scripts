@@ -23,7 +23,7 @@ Install-WindowsFeature web-server -IncludeManagementTools
 Install-WindowsFeature NET-Framework-45-ASPNET
 
 # Download app
-Invoke-WebRequest  https://github.com/elizaveta-maksimova/powershell-scripts/blob/master/azure-store-app/archived/azure-store-app.zip -OutFile c:\temp\azurestore.zip
+Invoke-WebRequest  https://github.com/elizaveta-maksimova/powershell-scripts/blob/master/azure-store-app/archived/azure-store-app.zip?raw=true -OutFile c:\temp\azurestore.zip
 
 # Expand zip archive
 Expand-Archive C:\temp\azurestore.zip c:\azurestore
