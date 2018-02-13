@@ -38,14 +38,14 @@ $targetFolder = 'C:\azurestore'
 [System.IO.Compression.ZipFile]::ExtractToDirectory($sourceFile, $targetFolder)
 
 
-$webConfig = 'C:\app\Web.config'
+$webConfig = 'C:\azurestore\Web.config'
 $webConfigXml = (Get-Content $webConfig) -as [Xml]
 
 $storageConnection = $webConfigXml.configuration.appSettings.add | where {$_.Key -eq 'StorageConnectionString'}
 $storageConnection.value = "DefaultEndpointsProtocol=https;AccountName=$storageName;AccountKey=$storagePassword"
 
 $dbConnection = $webConfigXml.configuration.connectionStrings.add | where {$_.Name -eq 'ProductModel'}
-$dbConnection.connectionString = "Server=$sqlUserServer;Database=MusicStore;Integrated Security=False;User Id=$sqlUserName;Password=$sqlUserPassword;MultipleActiveResultSets=True;Connect Timeout=30"
+$dbConnection.connectionString = "Server=$sqlUserServer;Database=ProductDB;Integrated Security=False;User Id=$sqlUserName;Password=$sqlUserPassword;MultipleActiveResultSets=True;Connect Timeout=30"
 
 $webConfigXml.Save($webConfig)
 
